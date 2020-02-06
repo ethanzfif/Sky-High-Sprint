@@ -19,17 +19,18 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         //mouse
-        if (Input.GetAxis("Mouse X") != 0)
+        /*if (Input.GetAxis("Mouse X") != 0)
         {
             cameraInput = Input.GetAxis("Mouse X");
             transform.RotateAround(player.transform.position, Vector3.up, cameraInput * cameraSpeed / 8 * Time.deltaTime);
         }
         //controller
         else
-        {
+        {*/
             cameraInput = Input.GetAxis("Stick X");
             transform.RotateAround(player.transform.position, Vector3.up, cameraInput * cameraSpeed * Time.deltaTime);
-        }
+        Debug.Log(cameraInput);
+        //}
 
         //set input to zero to fight drifting
         cameraInput = 0.0f;

@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float zInput;
 
     private float jumpForce = 500;
+    private int jumpMax = 3;
     private int jumpCount = 0;
     public GameObject playerCamera;
     void Start()
@@ -35,8 +36,9 @@ public class PlayerController : MonoBehaviour
 
 
         if ((Input.GetKeyDown("joystick button 5") || Input.GetKeyDown("space")) && jumpCount > 0) {
-            //cancel fall speed then jump
+            //cancel fall speed
             playerRb.velocity = new Vector3(playerRb.velocity.x, 0.0f, playerRb.velocity.z);
+            //add jump force
             playerRb.AddForce(Vector3.up * Time.deltaTime * jumpForce, ForceMode.Impulse);
             jumpCount -= 1;
         }
@@ -47,17 +49,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //double jump for control
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            jumpCount = 2;
+            jumpCount = jumpMax;
         }
         else if (collision.gameObject.CompareTag("Sticky"))
         {
-            jumpCount = 2;
+            jumpCount = jumpMax;
             transform.parent = collision.gameObject.transform;
         }
         else if (collision.gameObject.CompareTag("Goal"))
@@ -66,14 +66,20 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Checkpoint"))
         {
-            jumpCount = 2;
-            playerSpawnPos = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z);
+            jumpCount = jumpMax;
+            //more complex spawn
+            //playerSpawnPos = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z);
+
+            //get platform pos
+            playerSpawnPos = collision.gameObject.transform.position;
+            //raise spawn pos
+            playerSpawnPos = new Vector3(playerSpawnPos.x, playerSpawnPos.y + 2.0f, playerSpawnPos.z);
         }
     }
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
-        if(jumpCount == 2)
+        if(jumpCount == jumpMax)
         {
             jumpCount -= 1;
         }
