@@ -165,6 +165,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawnPos: {x: 0, y: 0, z: 0}
+  title: {fileID: 915062878690042205}
+  countdown: {fileID: 0}
   xInput: 0
   zInput: 0
   playerCamera: {fileID: 7500760473284925155}

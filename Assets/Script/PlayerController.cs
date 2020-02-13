@@ -6,18 +6,22 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
     public Vector3 playerSpawnPos;
+    public GameObject title;
+    public GameObject countdown;
 
     private float speed = 15;
     public float xInput;
     public float zInput;
 
     private float jumpForce = 500;
-    private int jumpMax = 3;
+    private int jumpMax = 2;
     private int jumpCount = 0;
     public GameObject playerCamera;
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        title = GameObject.Find("Title");
+        title.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,29 +57,29 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            jumpCount = jumpMax;
+            touchFloor();
         }
         else if (collision.gameObject.CompareTag("Sticky"))
         {
-            jumpCount = jumpMax;
+            touchFloor();
             transform.parent = collision.gameObject.transform;
-        }
-        else if (collision.gameObject.CompareTag("Goal"))
-        {
-            Destroy(gameObject);
         }
         else if (collision.gameObject.CompareTag("Checkpoint"))
         {
-            jumpCount = jumpMax;
-            //more complex spawn
-            //playerSpawnPos = new Vector3(transform.position.x, transform.position.y + 5.0f, transform.position.z);
+            touchFloor();
 
             //get platform pos
             playerSpawnPos = collision.gameObject.transform.position;
             //raise spawn pos
             playerSpawnPos = new Vector3(playerSpawnPos.x, playerSpawnPos.y + 2.0f, playerSpawnPos.z);
         }
+        else if (collision.gameObject.CompareTag("Goal"))
+        {
+            //place on pedistal
+            Destroy(gameObject);
+        }
     }
+
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
@@ -83,5 +87,11 @@ public class PlayerController : MonoBehaviour
         {
             jumpCount -= 1;
         }
+    }
+
+    //happens on all floor touches
+    private void touchFloor()
+    {
+        jumpCount = jumpMax;
     }
 }

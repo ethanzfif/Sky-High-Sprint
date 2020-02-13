@@ -13,8 +13,11 @@ public class MovingPlatform : MonoBehaviour
     {
         //randomize speed
         speed = Random.Range(5, 16);
+        //randomize direction
+        moveOnX = Random.value > 0.5;
         //randomize sart pos
         int placement = Random.Range(-shiftRange, shiftRange);
+
         //note spawn pos and move to randomized pos
         if (moveOnX)
         {

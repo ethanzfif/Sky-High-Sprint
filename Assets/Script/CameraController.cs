@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    private float cameraSpeed = 400.0f;
+    private float cameraSpeed = 200.0f;
     private float cameraInput;
     public GameObject player;
     // Start is called before the first frame update
@@ -19,19 +19,19 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         //mouse
-        /*if (Input.GetAxis("Mouse X") != 0)
+        if (Input.GetAxis("Mouse X") != 0)
         {
             cameraInput = Input.GetAxis("Mouse X");
-            transform.RotateAround(player.transform.position, Vector3.up, cameraInput * cameraSpeed / 8 * Time.deltaTime);
+            transform.RotateAround(player.transform.position, Vector3.up, cameraInput * cameraSpeed / 4 * Time.deltaTime);
         }
         //controller
         else
-        {*/
+        {
             cameraInput = Input.GetAxis("Stick X");
             transform.RotateAround(player.transform.position, Vector3.up, cameraInput * cameraSpeed * Time.deltaTime);
-        Debug.Log(cameraInput);
-        //}
+        }
 
+        Debug.Log(cameraInput);
         //set input to zero to fight drifting
         cameraInput = 0.0f;
     }

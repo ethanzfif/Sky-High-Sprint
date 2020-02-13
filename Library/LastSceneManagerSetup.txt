@@ -1,10 +1,4 @@
 sceneSetups:
-- path: Assets/Management.unity
+- path: Assets/Scenes/Level.unity
   isLoaded: 1
   isActive: 1
-- path: Assets/Test Room.unity
-  isLoaded: 0
-  isActive: 0
-- path: Assets/Level.unity
-  isLoaded: 1
-  isActive: 0
