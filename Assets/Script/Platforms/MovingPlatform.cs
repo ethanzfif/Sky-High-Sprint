@@ -7,7 +7,7 @@ public class MovingPlatform : MonoBehaviour
     public bool moveOnX = true;
     private int shiftRange = 9;
     public int speed;
-    private float spawnPos;
+    private Vector3 spawnPos;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,15 +18,15 @@ public class MovingPlatform : MonoBehaviour
         //randomize sart pos
         int placement = Random.Range(-shiftRange, shiftRange);
 
-        //note spawn pos and move to randomized pos
+        //note spawn pos
+        spawnPos = transform.position;
+        //move to randomized pos
         if (moveOnX)
         {
-            spawnPos = transform.position.x;
             transform.Translate(Vector3.right * placement);
         }
         else
         {
-            spawnPos = transform.position.z;
             transform.Translate(Vector3.forward * placement);
         }
     }
@@ -36,20 +36,20 @@ public class MovingPlatform : MonoBehaviour
     {
         if (moveOnX)
         {
-            MovePlatform(Vector3.right, transform.position.x);
+            MovePlatform(Vector3.right, transform.position);
         }
         else
         {
-            MovePlatform(Vector3.forward, transform.position.z);
+            MovePlatform(Vector3.forward, transform.position);
         }
     }
 
     //needs movement direction and current pos
     //moves platform on movement axis
-    private void MovePlatform(Vector3 vector, float pos)
+    private void MovePlatform(Vector3 vector, Vector3 pos)
     {
         //keep platform in range
-        if (pos > (spawnPos + shiftRange) || pos < (spawnPos - shiftRange))
+        if (Mathf.Abs(spawnPos.x - pos.x) > shiftRange || Mathf.Abs(spawnPos.z - pos.z) > shiftRange)
         {
             speed *= -1;
         }

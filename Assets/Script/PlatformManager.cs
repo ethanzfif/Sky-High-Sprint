@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlatformManager : MonoBehaviour
 {
-    private Vector3 placementPos;
+    public Vector3 placementPos;
+    public Quaternion placementRotation;
     //x or z distance
     private float platformSpacing = 15.0f;
     //y distance
@@ -13,14 +14,19 @@ public class PlatformManager : MonoBehaviour
     private int oldDirection = 0;
     private int newDirection = 0;
     public GameObject[] platformList;
-    public GameObject goal;
+    public int platformCount = 50; //50
     public GameObject checkpoint;
+    public GameObject goal;
+    public GameObject pedestal;
     private GameObject recentPlatform;
     public bool canSpawnPlatforms = false;
+    private int winners = 0;
+    private GameManager gameManagerScript;
     // Start is called before the first frame update
     void Start()
     {
-
+        winners = 0;
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -29,19 +35,20 @@ public class PlatformManager : MonoBehaviour
 
         if (canSpawnPlatforms)
         {
-            SpawnPlatforms(30);
+            SpawnPlatforms(platformCount);
             canSpawnPlatforms = false;
         }
     }
 
     //needs platformCount
     //spawns platforms
-    public void SpawnPlatforms(int platformCount)
+    public void SpawnPlatforms(int platformNumber)
     {
         //find spawn pos 1
         placementPos = transform.position;
+        placementRotation = transform.rotation;
         //place platforms needed
-        for (int i = 1; i < platformCount; i++)
+        for (int i = 1; i < platformNumber; i++)
         {
             nextSpawnPos();
             //switch direction every 4 platforms
@@ -53,7 +60,7 @@ public class PlatformManager : MonoBehaviour
             if (i % 10 == 0)
             {
                 //spawn checkpoint
-                Instantiate(checkpoint, placementPos, transform.rotation);
+                Instantiate(checkpoint, placementPos, placementRotation);
             }
             else
             {
@@ -61,7 +68,15 @@ public class PlatformManager : MonoBehaviour
             }
         }
         //spawn goal
-        Instantiate(goal, placementPos, transform.rotation);
+        nextSpawnPos();
+        Instantiate(goal, placementPos, placementRotation);
+        //give space for pedestal
+        for(int i = 0; i < 4; i++)
+        {
+            nextSpawnPos();
+        }
+        //spawn pedistal
+        Instantiate(pedestal, placementPos, placementRotation);
     }
 
     //needs current pos
@@ -69,8 +84,8 @@ public class PlatformManager : MonoBehaviour
     private void SpawnRandomPlatform(Vector3 pos)
     {
         //save new platform and instantiate
-        recentPlatform = platformList[Random.Range(0, platformList.Length)];
-        Instantiate(recentPlatform, placementPos, transform.rotation);
+        recentPlatform = platformList[/*Random.Range(0, platformList.Length)*/1];
+        Instantiate(recentPlatform, placementPos, placementRotation);
 
     }
 
@@ -103,8 +118,82 @@ public class PlatformManager : MonoBehaviour
         //rotate left or right for next platform
         oldDirection = newDirection;
         newDirection = Random.Range(oldDirection - 1, oldDirection + 2);
+        //rotate platform
+        if (newDirection > oldDirection)
+        {
+            placementRotation *= Quaternion.Euler(0, 90, 0);
+        }
+        else if (newDirection < oldDirection)
+        {
+            placementRotation *= Quaternion.Euler(0, -90, 0);
+        }
         //keep within 0-3
         newDirection += 4;
         newDirection %= 4;
+    }
+
+    //returns position on pedistal for victor
+    public Vector3 PedestalData()
+    {
+        winners++;
+        gameManagerScript.DisplayVictor(winners);
+        switch (winners)
+        {
+            case 1:
+                //first pedestal
+                placementPos += new Vector3(0, 10, 0);
+                return placementPos;
+            case 2:
+                //second pedestal
+
+                //rotate left
+                newDirection -= 1;
+                //keep within 0-3
+                newDirection += 4;
+                newDirection %= 4;
+
+                nextSpawnPos();
+                placementPos -= new Vector3(0, 5, 0);
+                return placementPos;
+            case 3:
+                //third pedestal
+
+                //rotate 180
+                newDirection += 2;
+                //keep within 0-3
+                newDirection += 4;
+                newDirection %= 4;
+
+                nextSpawnPos();
+                nextSpawnPos();
+                placementPos -= new Vector3(0, 10, 0);
+                return placementPos;
+            default:
+                //loss pedestal
+
+                //rotate 180
+                newDirection += 2;
+                //keep within 0-3
+                newDirection += 4;
+                newDirection %= 4;
+
+                nextSpawnPos();
+
+                //rotate left
+                newDirection -= 1;
+                //keep within 0-3
+                newDirection += 4;
+                newDirection %= 4;
+
+                nextSpawnPos();
+                nextSpawnPos();
+                placementPos -= new Vector3(0, 5, 0);
+                return placementPos;
+        }
+    }
+
+    public int CheckWinners()
+    {
+        return winners;
     }
 }

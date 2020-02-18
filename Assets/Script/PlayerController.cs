@@ -17,11 +17,13 @@ public class PlayerController : MonoBehaviour
     private int jumpMax = 2;
     private int jumpCount = 0;
     public GameObject playerCamera;
+    private PlatformManager platformManagerScript;
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         title = GameObject.Find("Title");
         title.SetActive(false);
+        platformManagerScript = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
     }
 
     // Update is called once per frame
@@ -31,12 +33,12 @@ public class PlayerController : MonoBehaviour
         zInput = Input.GetAxis("Vertical");
 
         //set yPos of camera to 0
-        Vector3 playerRight = new Vector3(playerCamera.transform.right.x, 0, playerCamera.transform.right.z);
-        Vector3 playerForward = new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z);
+        //Vector3 playerRight = new Vector3(playerCamera.transform.right.x, 0, playerCamera.transform.right.z);
+        //Vector3 playerForward = new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z);
 
         //move in relation to camera
-        transform.Translate(playerRight * xInput * Time.deltaTime * speed);
-        transform.Translate(playerForward * zInput * Time.deltaTime * speed);
+        transform.Translate(Vector3.right * xInput * Time.deltaTime * speed, Space.Self);
+        transform.Translate(Vector3.forward * zInput * Time.deltaTime * speed, Space.Self);
 
 
         if ((Input.GetKeyDown("joystick button 5") || Input.GetKeyDown("space")) && jumpCount > 0) {
@@ -47,7 +49,8 @@ public class PlayerController : MonoBehaviour
             jumpCount -= 1;
         }
 
-        if(transform.position.y < -10)
+        //respawn on fall
+        if (transform.position.y < playerSpawnPos.y -10)
         {
             transform.position = playerSpawnPos;
         }
@@ -75,8 +78,16 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Goal"))
         {
-            //place on pedistal
-            Destroy(gameObject);
+            //call to gamemanager to giv victor placement
+            playerSpawnPos = platformManagerScript.PedestalData();
+            transform.position = playerSpawnPos;
+            //face toward losers
+            if(platformManagerScript.CheckWinners() < 4)
+            {
+                transform.Rotate(new Vector3(0, 180, 0));
+            }
+            //face toward victors
+            
         }
     }
 
