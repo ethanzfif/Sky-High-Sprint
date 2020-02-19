@@ -24,26 +24,16 @@ public class GameManager : MonoBehaviour
 
         if (timer >= 0)
         {
-
-            //anouncements
-            if (timer == 5000)
+            //start on screen countdown
+            DisplayTime();
+            timer-= 2; 
+            //spawn platforms
+            if (timer == 0)
             {
                 timerText.text = "";
-                timer = 0;
+                timer = -1;
+                platformManagerScript.canSpawnPlatforms = true;
             }
-            else if (timer < 3000)
-            {
-                //start on screen countdown
-                DisplayTime();
-                //spawn platforms
-                if (timer == 0)
-                {
-                    timerText.text = "";
-                    timer = -1;
-                    platformManagerScript.canSpawnPlatforms = true;
-                }
-            }
-            timer -= 2;
         }
     }
 
@@ -62,6 +52,5 @@ public class GameManager : MonoBehaviour
         {
             timerText.text = place + " players have reached the goal!";
         }
-        timer = 5200;
     }
 }

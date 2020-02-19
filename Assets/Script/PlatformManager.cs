@@ -14,7 +14,7 @@ public class PlatformManager : MonoBehaviour
     private int oldDirection = 0;
     private int newDirection = 0;
     public GameObject[] platformList;
-    private int platformCount = 0; //50
+    public int platformCount = 50; //50
     public GameObject checkpoint;
     public GameObject goal;
     public GameObject pedestal;
@@ -84,7 +84,7 @@ public class PlatformManager : MonoBehaviour
     private void SpawnRandomPlatform(Vector3 pos)
     {
         //save new platform and instantiate
-        recentPlatform = platformList[Random.Range(0, platformList.Length)];
+        recentPlatform = platformList[/*Random.Range(0, platformList.Length)*/1];
         Instantiate(recentPlatform, placementPos, placementRotation);
 
     }
