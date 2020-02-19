@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     public Vector3 playerSpawnPos;
     public GameObject title;
-    public GameObject countdown;
+    public GameObject controls;
 
     private float speed = 15;
     public float xInput;
@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
-        title = GameObject.Find("Title");
         title.SetActive(false);
+        controls.SetActive(false);
         platformManagerScript = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
     }
 
@@ -32,11 +32,7 @@ public class PlayerController : MonoBehaviour
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
 
-        //set yPos of camera to 0
-        //Vector3 playerRight = new Vector3(playerCamera.transform.right.x, 0, playerCamera.transform.right.z);
-        //Vector3 playerForward = new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z);
-
-        //move in relation to camera
+        //movement
         transform.Translate(Vector3.right * xInput * Time.deltaTime * speed, Space.Self);
         transform.Translate(Vector3.forward * zInput * Time.deltaTime * speed, Space.Self);
 

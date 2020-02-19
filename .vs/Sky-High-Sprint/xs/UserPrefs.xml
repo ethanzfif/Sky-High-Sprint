@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{BA3E8090-27EA-1DEC-AA1E-C12CF3A8BB4C}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Platforms/MovingPlatform.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/Platforms/FallingPlatform.cs">
     <Files>
-      <File FileName="Assets/Script/Platforms/FallingPlatform.cs" Line="32" Column="49" />
+      <File FileName="Assets/Script/Platforms/FallingPlatform.cs" Line="9" Column="32" />
       <File FileName="Assets/Script/PlayerController.cs" Line="50" Column="10" />
       <File FileName="Assets/Script/CameraController.cs" Line="26" Column="21" />
       <File FileName="Assets/Script/GameManager.cs" Line="30" Column="30" />
-      <File FileName="Assets/Script/PlatformManager.cs" Line="51" Column="43" />
-      <File FileName="Assets/Script/Platforms/MovingPlatform.cs" Line="54" Column="25" />
+      <File FileName="Assets/Script/PlatformManager.cs" Line="15" Column="18" />
+      <File FileName="Assets/Script/Platforms/MovingPlatform.cs" Line="29" Column="10" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

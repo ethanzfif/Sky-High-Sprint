@@ -6,7 +6,7 @@ public class FallingPlatform : MonoBehaviour
 {
     private Vector3 spawnPos;
     private bool falling = false;
-    private float fallDelay = 2.0f;
+    private float fallDelay = 1.0f;
     private float fallTimer;
     private float shakeSpeed = 5.0f;
     private int flickerSpeed = 0;
@@ -40,9 +40,6 @@ public class FallingPlatform : MonoBehaviour
             //drop platform
             else
             {
-                //corect pos
-                //transform.position = spawnPos;
-
                 transform.Translate(Vector3.down * fallSpeed * Time.deltaTime);
             }
             //bring platform back up

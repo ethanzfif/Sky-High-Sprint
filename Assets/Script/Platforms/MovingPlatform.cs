@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     public bool moveOnX = true;
-    private int shiftRange = 9;
+    private int shiftRange = 8;
     public int speed;
     private Vector3 spawnPos;
     // Start is called before the first frame update
@@ -49,7 +49,7 @@ public class MovingPlatform : MonoBehaviour
     private void MovePlatform(Vector3 vector, Vector3 pos)
     {
         //keep platform in range
-        if (Mathf.Abs(spawnPos.x - pos.x) > shiftRange || Mathf.Abs(spawnPos.z - pos.z) > shiftRange)
+        if (Mathf.Abs(spawnPos.x - pos.x) >= shiftRange + 1 || Mathf.Abs(spawnPos.z - pos.z) >= shiftRange + 1)
         {
             speed *= -1;
         }
