@@ -168,7 +168,7 @@ public class PlatformManager : MonoBehaviour
                 nextSpawnPos();
                 placementPos -= new Vector3(0, 10, 0);
                 return placementPos;
-            default:
+            case 4:
                 //loss pedestal
 
                 //rotate 180
@@ -188,6 +188,8 @@ public class PlatformManager : MonoBehaviour
                 nextSpawnPos();
                 nextSpawnPos();
                 placementPos -= new Vector3(0, 5, 0);
+                return placementPos;
+            default:
                 return placementPos;
         }
     }
