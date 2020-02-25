@@ -18,12 +18,17 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 0;
     public GameObject playerCamera;
     private PlatformManager platformManagerScript;
+
+    public AudioClip jump;
+    private AudioSource playerAudio;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         title = GameObject.Find("Title");
         title.SetActive(false);
         platformManagerScript = GameObject.Find("PlatformManager").GetComponent<PlatformManager>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,10 +36,6 @@ public class PlayerController : MonoBehaviour
     {
         xInput = Input.GetAxis("Horizontal");
         zInput = Input.GetAxis("Vertical");
-
-        //set yPos of camera to 0
-        //Vector3 playerRight = new Vector3(playerCamera.transform.right.x, 0, playerCamera.transform.right.z);
-        //Vector3 playerForward = new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z);
 
         //move in relation to camera
         transform.Translate(Vector3.right * xInput * Time.deltaTime * speed, Space.Self);
@@ -47,13 +48,15 @@ public class PlayerController : MonoBehaviour
             //add jump force
             playerRb.AddForce(Vector3.up * Time.deltaTime * jumpForce, ForceMode.Impulse);
             jumpCount -= 1;
+            //jump sound
+            playerAudio.PlayOneShot(jump, 1.0f);
         }
 
         //respawn on fall
-        if (transform.position.y < playerSpawnPos.y -10)
+        /*if (transform.position.y < playerSpawnPos.y -10)
         {
             transform.position = playerSpawnPos;
-        }
+        }*/
     }
 
     private void OnCollisionEnter(Collision collision)

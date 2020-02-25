@@ -24,15 +24,24 @@ public class GameManager : MonoBehaviour
 
         if (timer >= 0)
         {
-            //start on screen countdown
-            DisplayTime();
-            timer-= 2; 
-            //spawn platforms
-            if (timer == 0)
+            timer-= 2;
+            //end popup text
+            if (timer == 3000)
             {
                 timerText.text = "";
                 timer = -1;
-                platformManagerScript.canSpawnPlatforms = true;
+            }
+            //spawn platforms
+            else if (timer < 3000)
+            {
+                //start on screen countdown
+                DisplayTime();
+                //end countdown
+                if (timer == 0)
+                {
+                    timerText.text = "";
+                    platformManagerScript.canSpawnPlatforms = true;
+                }
             }
         }
     }
@@ -47,10 +56,12 @@ public class GameManager : MonoBehaviour
         if(place == 1)
         {
             timerText.text = "The first player has reached the goal!!!";
+            timer = 3200;
         }
         else
         {
             timerText.text = place + " players have reached the goal!";
+            timer = 3200;
         }
     }
 }

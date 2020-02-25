@@ -941,7 +941,7 @@ MonoBehaviour:
   - {fileID: 2339337151967105378, guid: 5c164457a0d124238b5de97736d262c2, type: 3}
   - {fileID: 4296322616563863282, guid: 87622849b45e848edb5fdb32c1f3315b, type: 3}
   - {fileID: 7979121554504233431, guid: 3fc0ca875569e44bbbfd543851e4d6cc, type: 3}
-  platformCount: 10
+  platformCount: 50
   checkpoint: {fileID: 1718269342805964760, guid: 65d332b41cdab4307854246724dd65f9,
     type: 3}
   goal: {fileID: 7674460740757319595, guid: 73ff2ec0df0344e0999df6fb53d3c14c, type: 3}

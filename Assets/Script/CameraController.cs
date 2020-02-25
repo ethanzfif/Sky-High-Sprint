@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetAxis("Mouse X") != 0)
         {
             cameraInput = Input.GetAxis("Mouse X");
-            transform.Rotate(Vector3.up, cameraInput * cameraSpeed / 4 * Time.deltaTime);
+            transform.Rotate(Vector3.up, cameraInput * cameraSpeed / 2 * Time.deltaTime);
         }
         //controller
         else
