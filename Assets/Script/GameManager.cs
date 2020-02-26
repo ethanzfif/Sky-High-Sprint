@@ -6,7 +6,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public Vector3 oldGrav;
-    private int timer = 100; //2100
+    private int timer = 2100; //2100
     private PlatformManager platformManagerScript;
     public TextMeshProUGUI timerText;
 
